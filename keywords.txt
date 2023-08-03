@@ -1,28 +1,25 @@
-ADS1219								KEYWORD1
+DACX0502							KEYWORD1
 
-ads1219_conf_reg					KEYWORD2
-ads1219_status_reg					KEYWORD2
+dacX0502_reg						KEYWORD2
+dacX0502_devid_reg					KEYWORD2
+dacX0502_sync_reg					KEYWORD2
+dacX0502_conf_reg					KEYWORD2
+dacX0502_gain_reg					KEYWORD2
+dacX0502_trig_reg					KEYWORD2
+dacX0502_brdcast_reg				KEYWORD2
+dacX0502_status_reg					KEYWORD2
+dacX0502_dacn_reg					KEYWORD2
 
 init								KEYWORD2
 reset								KEYWORD2
 	
-set_conf_reg						KEYWORD2
-set_mux								KEYWORD2
-set_gain							KEYWORD2
-set_dr								KEYWORD2
-set_cm								KEYWORD2
-set_vref							KEYWORD2
-
-calibrate_offset					KEYWORD2
-trigger_conversion					KEYWORD2
-shut_down							KEYWORD2
-		
-trigger_and_get_single_shot_result	KEYWORD2
-get_conversion_result				KEYWORD2
-get_drdy							KEYWORD2
-		
-set_ext_ref_v_for_calc				KEYWORD2
-measure_voltage						KEYWORD2
-	
-_set_reg_defaults					KEYWORD2
-_write_conf_reg						KEYWORD2
+set_buf_gain						KEYWORD2
+set_ref_div							KEYWORD2
+set_vref_value						KEYWORD2
+trigger_update						KEYWORD2
+set_dac_a							KEYWORD2
+set_dac_b							KEYWORD2
+shut_down_daca						KEYWORD2
+shut_down_dacb						KEYWORD2
+shut_down_ref						KEYWORD2
+shut_down_all						KEYWORD2

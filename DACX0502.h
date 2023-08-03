@@ -19,7 +19,7 @@ Arduino library for the DAC80502, DAC70502, DAC60502 DACs from Texas Instruments
 
 //############# COMMAND BYTES ###############
 #define DACX0502_COMMAND_NOOP		0x00
-#define DACX0502_COMMAND_DEV_ID		0x01
+#define DACX0502_COMMAND_DEVID		0x01
 #define DACX0502_COMMAND_SYNC		0x02
 #define DACX0502_COMMAND_CONFIG		0x03
 #define DACX0502_COMMAND_GAIN		0x04
@@ -144,7 +144,8 @@ class DACX0502
 		void init(uint8_t address, TwoWire *i2c = &Wire); //set I2C address, get devid and set the type
 		void reset();
 		
-		void set_buf_gain(uint8_t gain);
+		void set_buf_gain_a(uint8_t gain);
+		void set_buf_gain_b(uint8_t gain);
 		void set_ref_div(uint8_t ref_div);
 		void set_vref_value(float vref_value);//actual voltage of the reference
 		
@@ -153,17 +154,19 @@ class DACX0502
 		void set_dac_a(float voltage);
 		void set_dac_b(float voltage);
 		
-		void shut_down_daca();
-		void shut_down_dacb();
-		void shut_down_ref();
+		void shut_down_daca(bool status);
+		void shut_down_dacb(bool status);
+		void shut_down_ref(bool status);
 		void shut_down_all();
+		
+		uint16_t get_dev_id();
+		
 	
 	private:
-		void _set_reg_defaults();
-		void _write_command_byte(uint8_t command_byte);
 		uint16_t _read_reg(uint8_t reg); //reads and returns the requested register
-		uint16_t convert_voltage_to_dac_code(float voltage, uint8_t buf_gain);
-		uint8_t _wire_request_from(uint8_t num_bytes);
+		void _write_register(uint8_t command_byte, dacX0502_reg reg);
+		uint16_t _convert_voltage_to_dac_code(float voltage, uint8_t buf_gain);
+		uint8_t _wire_request_from(uint8_t num_bytes, bool stop);
 
 		uint8_t _addr;
 		TwoWire *_i2c;
