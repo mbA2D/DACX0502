@@ -23,6 +23,7 @@ void DACX0502::init(uint8_t address, TwoWire *i2c = &Wire) //set I2C address, ge
 	}
 	_i2c->setWireTimeout(3000, true);
 	shut_down_ref(true);
+	reset();
 }
 
 void DACX0502::reset()
@@ -140,11 +141,20 @@ uint16_t DACX0502::_convert_voltage_to_dac_code(float voltage, uint8_t buf_gain)
 {
 	//vout = DAC_DATA / 2^N * VREFIO / DIV * GAIN
 	//DAC_DATA = VOUT * 2^N * DIV / VREFIO / GAIN
-
-	uint32_t code = uint32_t((voltage * float(uint32_t(1)<<_num_bits) * float(_ref_div) / float(_ref_v) / float(buf_gain)) + 0.5); //+0.5 to round truncate to nearest int
-	if (code > (1<<_num_bits -1))
+	
+	if(voltage <= 0.0)
 	{
-		code = (1<<_num_bits -1);
+		voltage = 0.0;
+	}
+	else if (voltage >= _ref_v*float(buf_gain)/float(_ref_div))
+	{
+		voltage = _ref_v * buf_gain;
+	}
+	
+	uint32_t code = uint32_t((voltage * float(uint32_t(1)<<_num_bits) * float(_ref_div) / float(_ref_v) / float(buf_gain)) + 0.5); //+0.5 to round truncate to nearest int
+	if (code >= (uint16_t(1<<_num_bits) -1))
+	{
+		code = (uint16_t(1<<_num_bits) -1);
 	}
 	return uint16_t(code);
 }
