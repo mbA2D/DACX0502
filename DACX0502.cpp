@@ -11,7 +11,7 @@ DACX0502::DACX0502()
 	_num_bits = 16;
 }
 
-void DACX0502::init(uint8_t address, TwoWire *i2c = &Wire) //set I2C address, get devid and set the type, turn off ref
+void DACX0502::init(uint8_t address, TwoWire *i2c) //set I2C address, get devid and set the type, turn off ref
 {
 	_addr = address;
 	_i2c = i2c;
@@ -148,7 +148,7 @@ uint16_t DACX0502::_convert_voltage_to_dac_code(float voltage, uint8_t buf_gain)
 	}
 	else if (voltage >= _ref_v*float(buf_gain)/float(_ref_div))
 	{
-		voltage = _ref_v * buf_gain;
+		voltage = _ref_v * buf_gain / float(_ref_div);;
 	}
 	
 	uint32_t code = uint32_t((voltage * float(uint32_t(1)<<_num_bits) * float(_ref_div) / float(_ref_v) / float(buf_gain)) + 0.5); //+0.5 to round truncate to nearest int

@@ -13,7 +13,7 @@ Arduino library for the DAC80502, DAC70502, DAC60502 DACs from Texas Instruments
 #define DACX0502_REF_DIV_DEFAULT		1
 
 #define DACX0502_MIN_I2C_ADDRESS		0x48
-#define DACX0502_MAX_I2C_ADDRESS		0x51
+#define DACX0502_MAX_I2C_ADDRESS		0x4B
 
 
 
